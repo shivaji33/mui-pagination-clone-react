@@ -1,0 +1,18 @@
+.pagination-wrapper {
+}
+
+button {
+  border: 1px solid transparent;
+  background: red;
+  margin: 0.25rem;
+  color: #fff;
+  border-radius: 2px;
+}
+
+button.active {
+  background: green;
+}
+
+button:disabled {
+  opacity: 0.8;
+}
