@@ -10,7 +10,7 @@ export default function App() {
   return (
     <div className="App">
       <Pagination
-        count={8}
+        count={1000}
         currentPage={page}
         maximauVisiblePages={7}
         onChange={paginationChange}
