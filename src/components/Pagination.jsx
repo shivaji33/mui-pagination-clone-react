@@ -1,4 +1,8 @@
 const Pagination = ({ count, currentPage, maximauVisiblePages, onChange }) => {
+  /* use Memo won't required here bacause
+   whenever a prop (count, currentPage, or maximauVisiblePages) changes, React will
+    automatically trigger a re-render of the component.
+    This means the pages function will be called again to recalculate the page list */
   const pages = () => {
     const pagesList = [];
     if (count <= maximauVisiblePages) {
