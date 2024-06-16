@@ -1,20 +1,20 @@
-import { useState } from "react";
-import Pagination from "./components/Pagination";
-import "./styles.css";
 
-export default function App() {
-  const [page, setPage] = useState(1);
-  const paginationChange = (pageNumber) => {
-    setPage(pageNumber);
-  };
+import { useState } from 'react';
+import './App.css'
+import Pagination from './components/Pagination'
+
+function App() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
   return (
-    <div className="App">
-      <Pagination
-        count={1000}
-        currentPage={page}
-        maximauVisiblePages={7}
-        onChange={paginationChange}
-      />
-    </div>
-  );
+    <>
+    <Pagination count={1000} limit={5} currentPage={currentPage} pageChange={onPageChange} />
+    </>
+  )
 }
+
+export default App
