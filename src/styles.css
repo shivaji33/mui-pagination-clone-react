@@ -1,18 +1,27 @@
-.pagination-wrapper {
+.pagination-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 button {
+  margin: .25rem;
+  cursor: pointer;
   border: 1px solid transparent;
-  background: red;
-  margin: 0.25rem;
-  color: #fff;
-  border-radius: 2px;
-}
-
-button.active {
-  background: green;
+  border-radius: 3px;
 }
 
 button:disabled {
-  opacity: 0.8;
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+button.action-btn {
+  background: blue;
+  color: #fff;
+}
+
+button.page-active {
+ background:green;
+  color: #fff;   
 }
