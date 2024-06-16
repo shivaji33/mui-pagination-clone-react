@@ -1,88 +1,63 @@
-const Pagination = ({ count, currentPage, maximauVisiblePages, onChange }) => {
-  /* use Memo won't required here bacause
-   whenever a prop (count, currentPage, or maximauVisiblePages) changes, React will
-    automatically trigger a re-render of the component.
-    This means the pages function will be called again to recalculate the page list */
+
+const Pagination = ({count, limit = 7,currentPage, pageChange}) => {
+
+  if (limit < 5) {
+    return <p>No renderer found: Invalid Limit</p>
+  }
+
   const pages = () => {
-    const pagesList = [];
-    if (count <= maximauVisiblePages) {
-      for (let i = 1; i <= count; i++) {
-        pagesList.push(i);
-      }
+    let result = [];
+    if (count <= limit) {
+      result = Array.from({length: count}, (_, k) => k + 1);
     } else {
-      pagesList.push(1);
+      result.push(1);
 
-      const middleValuesCount = maximauVisiblePages - 2;
-      let startPage;
-      let endPage;
+      const middleValue = limit - 2;
+      let startPage,endPage;
 
-      if (currentPage < middleValuesCount) {
+      if (currentPage <= middleValue - 1) {
         startPage = 2;
-        endPage = middleValuesCount;
-      } else if (currentPage > count - middleValuesCount + 1) {
-        startPage = count - middleValuesCount + 1;
+        endPage = middleValue;
+      } else if (currentPage > count - (middleValue - 1)) {
+        startPage = count - (middleValue - 1);
         endPage = count - 1;
       } else {
         startPage = currentPage - 1;
-        endPage = currentPage + 1;
+        endPage = currentPage + 1
       }
 
-      if (currentPage >= middleValuesCount) {
-        pagesList.push("...");
+      // adding ellips start
+      if (currentPage >= middleValue) {
+        result.push('...');
       }
 
       for (let i = startPage; i <= endPage; i++) {
-        pagesList.push(i);
+        result.push(i);
       }
 
-      if (currentPage <= count - middleValuesCount + 1) {
-        pagesList.push("...");
+      // adding ellips end
+      if (currentPage <= count - (middleValue - 1)) {
+        result.push('...');
       }
 
-      pagesList.push(count);
+      result.push(count);
     }
-    return pagesList;
-  };
+    return result;
+  }
 
   return (
-    <div className="pagination-wrapper">
-      <button
-        disabled={currentPage === 1}
-        onClick={() => onChange(currentPage - 1)}
-      >
-        ←
-      </button>
-      {pages().map((page, i) => {
-        if (isNaN(page)) {
-          return (
-            <span
-              key={page + " " + i}
-              style={{
-                margin: ".25rem",
-              }}
-            >
-              {page}
-            </span>
-          );
-        }
-        return (
-          <button
-            key={page}
-            className={page === currentPage ? "active" : ""}
-            onClick={() => onChange(page)}
-          >
-            {page}
-          </button>
-        );
-      })}
-      <button
-        disabled={currentPage === count}
-        onClick={() => onChange(currentPage + 1)}
-      >
-        →
-      </button>
+    <div className="pagination-container">
+      <button className="action-btn" disabled={currentPage < 2}>Prev</button>
+        {pages().map(number => {
+          if (!isNaN(number)) {
+           return <button onClick={() => pageChange(number)} className={`${currentPage === number ? 'page-active': ''}`}>{number}</button>
+          }
+          // ellips
+          return <span>{number}</span>
+        })}
+      <button className="action-btn" disabled={currentPage > count - 1}>Next</button>
     </div>
   );
-};
+}
 
 export default Pagination;
